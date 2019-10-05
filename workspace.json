@@ -1,8 +1,90 @@
 {
   "version": 1,
-  "projects": {},
+  "projects": {
+    "breakfast-client": {
+      "root": "apps/breakfast-client",
+      "sourceRoot": "apps/breakfast-client",
+      "projectType": "application",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "@nrwl/next:build",
+          "options": {
+            "root": "apps/breakfast-client",
+            "outputPath": "dist/apps/breakfast-client"
+          }
+        },
+        "serve": {
+          "builder": "@nrwl/next:dev-server",
+          "options": {
+            "buildTarget": "breakfast-client:build",
+            "dev": true
+          },
+          "configurations": {
+            "production": {
+              "dev": false
+            }
+          }
+        },
+        "export": {
+          "builder": "@nrwl/next:export",
+          "options": {
+            "buildTarget": "breakfast-client:build"
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:lint",
+          "options": {
+            "linter": "eslint",
+            "config": "apps/breakfast-client/.eslintrc",
+            "tsConfig": [
+              "apps/breakfast-client/tsconfig.json",
+              "apps/breakfast-client/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!apps/breakfast-client/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/breakfast-client/jest.config.js",
+            "tsConfig": "apps/breakfast-client/tsconfig.spec.json"
+          }
+        }
+      }
+    },
+    "breakfast-client-e2e": {
+      "root": "apps/breakfast-client-e2e",
+      "sourceRoot": "apps/breakfast-client-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/breakfast-client-e2e/cypress.json",
+            "tsConfig": "apps/breakfast-client-e2e/tsconfig.e2e.json",
+            "devServerTarget": "breakfast-client:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "breakfast-client:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:lint",
+          "options": {
+            "linter": "eslint",
+            "config": "apps/breakfast-client-e2e/.eslintrc",
+            "tsConfig": ["apps/breakfast-client-e2e/tsconfig.e2e.json"],
+            "exclude": ["**/node_modules/**", "!apps/breakfast-client-e2e/**"]
+          }
+        }
+      }
+    }
+  },
   "cli": {
-    "defaultCollection": "@nrwl/workspace"
+    "defaultCollection": "@nrwl/next"
   },
   "schematics": {
     "@nrwl/workspace": {
@@ -17,14 +99,13 @@
     },
     "@nrwl/react": {
       "application": {
-        "linter": "eslint"
-      },
-      "library": {
-        "linter": "eslint"
+        "linter": "eslint",
+        "babel": true
       }
     },
     "@nrwl/next": {
       "application": {
+        "style": "styled-components",
         "linter": "eslint"
       }
     },
@@ -48,5 +129,6 @@
         "linter": "eslint"
       }
     }
-  }
+  },
+  "defaultProject": "breakfast-client"
 }

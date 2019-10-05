@@ -7,5 +7,12 @@
     "tslint.json": "*",
     "nx.json": "*"
   },
-  "projects": {}
+  "projects": {
+    "breakfast-client": {
+      "tags": []
+    },
+    "breakfast-client-e2e": {
+      "tags": []
+    }
+  }
 }
